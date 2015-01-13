@@ -11,25 +11,10 @@ func main() {
 	inb := cryptolib.MustDecodeHex(input)
 	fmt.Printf("input: %q\n", string(inb))
 
-	var (
-		highestScore       float32
-		highestScoreChar   byte
-		highestScoreString string
-	)
-	for i := 0; i < 255; i++ {
-		keyByte := byte(i)
-		key := cryptolib.GenerateUniformKey(keyByte, len(inb))
-		got := string(cryptolib.Xor(inb, key))
-		score := cryptolib.ScoreEnglish(got)
-		if score > highestScore {
-			highestScore = score
-			highestScoreChar = keyByte
-			highestScoreString = got
-		}
-	}
+	score, char, plaintext := cryptolib.FindBestPlaintext(inb)
 	fmt.Printf("highest score was %f for char %q. Plaintext was likely:\n%q\n",
-		highestScore,
-		highestScoreChar,
-		highestScoreString,
+		score,
+		char,
+		plaintext,
 	)
 }

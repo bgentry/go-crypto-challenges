@@ -46,3 +46,19 @@ func ScoreEnglish(plaintext string) (score float32) {
 	}
 	return
 }
+
+func FindBestPlaintext(cipher []byte) (highestScore float32, char byte, plaintext string) {
+	keySize := len(cipher)
+	for i := 0; i < 255; i++ {
+		thisChar := byte(i)
+		thisKey := GenerateUniformKey(thisChar, keySize)
+		thisPlain := string(Xor(cipher, thisKey))
+		score := ScoreEnglish(thisPlain)
+		if score > highestScore {
+			highestScore = score
+			char = thisChar
+			plaintext = thisPlain
+		}
+	}
+	return
+}
