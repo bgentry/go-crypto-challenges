@@ -1,6 +1,9 @@
 package cryptolib
 
-import "encoding/hex"
+import (
+	"bytes"
+	"encoding/hex"
+)
 
 func MustDecodeHex(hexstr string) []byte {
 	inb, err := hex.DecodeString(hexstr)
@@ -16,6 +19,12 @@ func Xor(buf1, buf2 []byte) []byte {
 		res[i] = buf1[i] ^ buf2[i]
 	}
 	return res
+}
+
+func GenerateRepeatingKey(k []byte, length int) []byte {
+	n := (length + len(k) - 1) / len(k)
+	key := bytes.Repeat(k, n)
+	return key[:length]
 }
 
 func GenerateUniformKey(c byte, length int) []byte {
