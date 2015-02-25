@@ -5,6 +5,19 @@ import (
 	"testing"
 )
 
+func TestHammingDistance(t *testing.T) {
+	str1 := "this is a test"
+	str2 := "wokka wokka!!!"
+	want := 37
+	got, err := HammingDistance([]byte(str1), []byte(str2))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got != want {
+		t.Errorf("want %d, got %d", want, got)
+	}
+}
+
 func TestXor(t *testing.T) {
 	str1 := "1c0111001f010100061a024b53535009181c"
 	str2 := "686974207468652062756c6c277320657965"
